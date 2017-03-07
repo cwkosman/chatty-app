@@ -3,14 +3,30 @@ import Chatbar from './Chatbar.jsx';
 import MessageList from './MessageList.jsx';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: {name: 'Chuck'},
+      messages: [
+       {
+         username: 'Bob',
+         content: 'Has anyone seen my marbles?'
+       },
+       {
+         username: 'Anonymous',
+         content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
+       }
+     ]
+  };
+ }
   render() {
     return (
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
-        <MessageList />
-        <Chatbar/>
+        <MessageList MessagesList={this.state.messages} />
+        <Chatbar User={this.state.currentUser.name}/>
       </div>
     );
   }

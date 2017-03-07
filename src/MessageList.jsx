@@ -6,8 +6,13 @@ MessageList extends Component {
   render() {
     return (
       <main className="messages">
-        <Message/>
+        {this.props.MessagesList.map((message) => {
+          return (
+            <Message Username={message.username} Content={message.content}/>
+          );
+        })}
       </main>
+
     );
   }
 }
