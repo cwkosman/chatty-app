@@ -1,0 +1,15 @@
+{
+  "name": "chatty_server",
+  "version": "1.0.0",
+  "description": "WebSocket server for chatty_client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chuck Kosman <cwkosman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.15.2",
+    "ws": "2.2.0"
+  }
+}

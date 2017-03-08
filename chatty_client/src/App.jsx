@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
 import MessageList from './MessageList.jsx';
+// const WebSocket = require('ws');
+
+console.log(WebSocket);
 
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -48,5 +52,10 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    this.connecton = new WebSocket('ws://localhost:3001');
+  }
 }
+
 export default App;
