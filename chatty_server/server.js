@@ -23,8 +23,9 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     messageObject = JSON.parse(message);
     messageObject.id = uuid.v1();
-    console.log(messageObject);
-
+    wss.clients.forEach(function each(client) {
+      client.send(JSON.stringify(messageObject));
+    });
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
