@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
 import MessageList from './MessageList.jsx';
-// const WebSocket = require('ws');
-
-console.log(WebSocket);
 
 class App extends Component {
 
@@ -38,6 +35,7 @@ class App extends Component {
       //Use concat instead of push because state comes in as a string, almost like it gets JSON.strinigfied beforehand
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages: messages});
+      this.connection.send(JSON.stringify(newMessage));
    }
  }
 
@@ -54,7 +52,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.connecton = new WebSocket('ws://localhost:3001');
+    this.connection = new WebSocket('ws://localhost:3001');
   }
 }
 
