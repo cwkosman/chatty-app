@@ -8,18 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: 'Chuck'},
-      messages: [
-       {
-         id: '1',
-         username: 'Bob',
-         content: 'Has anyone seen my marbles?'
-       },
-       {
-         id: '2',
-         username: 'Anonymous',
-         content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-       }
-     ]
+      messages: []
   };
  }
 
@@ -31,8 +20,8 @@ class App extends Component {
 
  postNewMessage(event) {
    if(event.keyCode === 13) {
-      const newMessage = {id: this.state.messages.length + 1, username: this.state.currentUser.name, content: event.target.value};
-      //Use concat instead of push because state comes in as a string, almost like it gets JSON.strinigfied beforehand
+      const newMessage = {username: this.state.currentUser.name, content: event.target.value};
+      //Use concat instead of push because state needs to be treated as immutable
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages: messages});
       this.connection.send(JSON.stringify(newMessage));
