@@ -7,8 +7,8 @@ class Message extends Component {
       {this.props.Username &&
         <span className="message-username" style={{color: this.props.Color }}>{this.props.Username}</span>
       }
-        <span className="message-content">{this.props.Content}</span>
-      </div>
+        <span className="message-content">{this.props.Content}{this.props.Img && <img src={this.props.Img} className="message-img" />}</span>
+        </div>
     );
   }
 }

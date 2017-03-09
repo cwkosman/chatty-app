@@ -48,6 +48,10 @@ body {
     padding: 0 10px;
   }
 
+  &-img {
+    max-width:60%;
+  }
+
   &-username {
     flex: 2;
     font-weight: 700;

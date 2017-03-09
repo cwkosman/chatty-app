@@ -21,14 +21,19 @@ wss.broadcast = function(data) {
   });
 };
 
+const imgRegExp = /https?:\/\/.*\.(?:png|jpg|gif)/i;
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   wss.broadcast(`{"type": "clientCount", "clients": "${wss.clients.size}"}`);
+  console.log("connect");
 
   ws.on('message', (message) => {
     let messageObject = JSON.parse(message);
+    messageObject.img = messageObject.content.match(imgRegExp);
+    messageObject.content = messageObject.content.replace(imgRegExp, "");
     messageObject.id = uuid.v1();
     if (messageObject.type === "postMessage") {
       messageObject.type = "incomingMessage";
@@ -42,5 +47,6 @@ wss.on('connection', (ws) => {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     wss.broadcast(`{"type": "clientCount", "clients": "${wss.clients.size}"}`);
+    console.log("dc");
   });
 });
