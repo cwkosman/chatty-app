@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: 'Chuck'},
+      currentUser: {name: 'Chuck', color: '#' + Math.floor(Math.random()*16777215).toString(16) },
       messages: [],
       clients: 0
   };
@@ -19,7 +19,7 @@ class App extends Component {
    if(event.keyCode === 13) {
      const oldName = this.state.currentUser.name;
      const newName = event.target.value;
-     this.setState({currentUser: {name: newName }});
+     this.setState({currentUser: {name: newName, color: this.state.currentUser.color }})
      this.connection.send(JSON.stringify({"type": "postNotification", "content": `${oldName} has changed their name to ${newName}.`}));
    }
  }
@@ -30,9 +30,9 @@ class App extends Component {
 
  sendNewMessage(event) {
    if(event.keyCode === 13) {
-      const newMessage = {type: "postMessage", username: this.state.currentUser.name, content: event.target.value};
-      //Use concat instead of push because state needs to be treated as immutable
+      const newMessage = {type: "postMessage", username: this.state.currentUser.name, color: this.state.currentUser.color, content: event.target.value};
       this.connection.send(JSON.stringify(newMessage));
+      event.target.value = '';
    }
  }
 
