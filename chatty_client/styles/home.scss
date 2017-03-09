@@ -71,14 +71,21 @@ body {
   top: 0;
 
   &-brand {
+    float: left;
+    font-size: 28px;
+  }
+
+  &-brand, &-count {
     color: inherit;
     display: block;
-    float: left;
     font-weight: 700;
-    font-size: 28px;
     height: 60px;
     line-height: 60px;
     padding: 0 10px;
     text-decoration: none;
+  }
+
+  &-count {
+    float:right;
   }
 }

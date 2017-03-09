@@ -8,9 +8,11 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: 'Chuck'},
-      messages: []
+      messages: [],
+      clients: 0
   };
     this.postNewMessage = this.postNewMessage.bind(this);
+    this.updateClientCount = this.updateClientCount.bind(this);
  }
 
  changeUsername (event) {
@@ -34,11 +36,16 @@ class App extends Component {
    }
  }
 
+ updateClientCount(message) {
+   this.setState({clients: message.clients});
+ }
+
   render() {
     return (
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
+          <span className="navbar-count">{this.state.clients} users online</span>
         </nav>
         <MessageList MessagesList={this.state.messages} />
         <Chatbar User={this.state.currentUser.name} NameFunction={this.changeUsername.bind(this)} SendFunction={this.sendNewMessage.bind(this)}/>
@@ -49,7 +56,18 @@ class App extends Component {
   componentDidMount() {
     this.connection = new WebSocket('ws://localhost:3001');
     this.connection.onmessage = (event) => {
-      this.postNewMessage(JSON.parse(event.data));
+      let messageObject = JSON.parse(event.data);
+      switch (messageObject.type) {
+        case 'incomingMessage':
+        case 'incomingNotification':
+          this.postNewMessage(messageObject);
+          break;
+        case 'clientCount':
+          this.updateClientCount(messageObject);
+          break;
+        default:
+          'No type specified.'
+      }
     }
   }
 }
