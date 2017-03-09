@@ -15,7 +15,10 @@ class App extends Component {
 
  changeUsername (event) {
    if(event.keyCode === 13) {
-     this.setState({currentUser: {name: event.target.value }});
+     const oldName = this.state.currentUser.name;
+     const newName = event.target.value;
+     this.setState({currentUser: {name: newName }});
+     this.connection.send(JSON.stringify({"type": "postNotification", "content": `${oldName} has changed their name to ${newName}.`}));
    }
  }
 
@@ -25,7 +28,7 @@ class App extends Component {
 
  sendNewMessage(event) {
    if(event.keyCode === 13) {
-      const newMessage = {username: this.state.currentUser.name, content: event.target.value};
+      const newMessage = {type: "postMessage", username: this.state.currentUser.name, content: event.target.value};
       //Use concat instead of push because state needs to be treated as immutable
       this.connection.send(JSON.stringify(newMessage));
    }
